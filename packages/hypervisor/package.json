@@ -11,5 +11,8 @@
   "description": "",
   "devDependencies": {
     "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "kafkajs": "^2.2.4"
   }
 }
