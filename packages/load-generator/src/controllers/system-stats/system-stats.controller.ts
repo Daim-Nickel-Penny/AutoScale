@@ -1,25 +1,21 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
-import { LoadEventSchema, type LoadEvent } from "types/load-event";
-import { LoadEventService } from "../services/load-event.service.js";
+import { SystemStatsSchema, type SystemStats } from "types/system-stats";
+import { SystemStatsService } from "../../services/system-stats/system-stats.service.js";
 
-export const loadEventController = async (
+export const systemStatsController = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   try {
-    const result = LoadEventSchema.safeParse(request.body);
-
+    const result = SystemStatsSchema.safeParse(request.body);
     if (!result.success) {
       reply
         .status(400)
         .send({ error: "Invalid request body", issues: result.error.issues });
       return;
     }
-
-    const loadEvent: LoadEvent = result.data;
-
-    await LoadEventService(loadEvent);
-
+    const systemStats: SystemStats = result.data;
+    await SystemStatsService(systemStats);
     reply.send({ success: true });
   } catch (error) {
     reply.status(500).send({ error: "Internal Server Error" });
