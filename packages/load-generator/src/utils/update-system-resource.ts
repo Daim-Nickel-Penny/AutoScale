@@ -1,4 +1,6 @@
 import { store } from "./store.js";
+import { shouldScaleUp, getNextInstance } from "./scale-up.js";
+import { shouldScaleDown, getPreviousInstance } from "./scale-down.js";
 
 function smooth(prev: number, next: number, factor = 0.85) {
   return prev * factor + next * (1 - factor);
@@ -73,19 +75,43 @@ function calculateErrorRate(requests: number, prev: number) {
   base = Math.min(100, base);
   return Math.max(0, Math.round(smooth(prev, base, 0.8)));
 }
-export function updateSystemResource(request: { requests: number }) {
+export function updateSystemResource(request: {
+  requests: number;
+  cpu?: number;
+  memory?: number;
+  diskUsage?: number;
+  network?: number;
+}) {
   const rps = request.requests;
+  const instanceCount = store.vms.length;
+  const perInstanceRps = instanceCount > 0 ? rps / instanceCount : rps;
   const prevStats = store.systemStats;
   const prevMetrics = store.currentMetrics;
 
-  const cpu = calculateCPU(rps, prevStats.cpu);
-  const memory = calculateMemory(rps, prevStats.memory);
-  const diskUsage = calculateDiskUsage(rps, prevStats.diskUsage);
-  const network = calculateNetwork(rps, prevStats.network);
-  const threads = calculateThreads(rps, prevStats.threads);
-  const processes = calculateProcesses(rps, prevStats.processes);
-  const latency = calculateLatency(rps, prevMetrics.latency);
-  const errorRate = calculateErrorRate(rps, prevMetrics.errorRate);
+  const rawCpu =
+    typeof request.cpu === "number"
+      ? request.cpu
+      : calculateCPU(perInstanceRps, prevStats.cpu);
+  const rawMemory =
+    typeof request.memory === "number"
+      ? request.memory
+      : calculateMemory(perInstanceRps, prevStats.memory);
+  const rawDisk =
+    typeof request.diskUsage === "number"
+      ? request.diskUsage
+      : calculateDiskUsage(perInstanceRps, prevStats.diskUsage);
+  const rawNetwork =
+    typeof request.network === "number"
+      ? request.network
+      : calculateNetwork(perInstanceRps, prevStats.network);
+  const cpu = rawCpu;
+  const memory = rawMemory;
+  const diskUsage = rawDisk;
+  const network = rawNetwork;
+  const threads = calculateThreads(perInstanceRps, prevStats.threads);
+  const processes = calculateProcesses(perInstanceRps, prevStats.processes);
+  const latency = calculateLatency(perInstanceRps, prevMetrics.latency);
+  const errorRate = calculateErrorRate(perInstanceRps, prevMetrics.errorRate);
 
   store.systemStats.cpu = cpu;
   store.systemStats.memory = memory;
@@ -114,4 +140,31 @@ export function updateSystemResource(request: { requests: number }) {
   store.currentMetrics.requestPerSecond = rps;
   store.currentMetrics.latency = latency;
   store.currentMetrics.errorRate = errorRate;
+
+  const lastVm = store.vms[store.vms.length - 1];
+  if (lastVm) {
+    const currentName = lastVm.instanceName;
+    const upRaw =
+      rawCpu >= 90 || rawMemory >= 90 || rawDisk >= 90 || rawNetwork >= 90;
+    const downRaw =
+      rawCpu <= 10 && rawMemory <= 10 && rawDisk <= 10 && rawNetwork <= 10;
+    if (upRaw) {
+      const next = getNextInstance(currentName);
+      if (next) store.vms.push(next);
+    } else if (downRaw && store.vms.length > 1) {
+      const prev = getPreviousInstance(currentName);
+      if (prev) store.vms.pop();
+    } else {
+      // random cycling fallback: 20% chance
+      if (Math.random() < 0.2) {
+        if (Math.random() < 0.5) {
+          const nextForce = getNextInstance(currentName);
+          if (nextForce) store.vms.push(nextForce);
+        } else if (store.vms.length > 1) {
+          const prevForce = getPreviousInstance(currentName);
+          if (prevForce) store.vms.pop();
+        }
+      }
+    }
+  }
 }

@@ -1,10 +1,5 @@
 import { store } from "../../utils/store.js";
 import { updateSystemResource } from "../../utils/update-system-resource.js";
-import { shouldScaleUp, getNextInstance } from "../../utils/scale-up.js";
-import {
-  shouldScaleDown,
-  getPreviousInstance,
-} from "../../utils/scale-down.js";
 import type { LoadEvent } from "../../types/load-event.js";
 
 export const LoadEventService = (loadEvent: LoadEvent) => {
@@ -17,26 +12,28 @@ export const LoadEventService = (loadEvent: LoadEvent) => {
       } catch {}
     }
 
-    updateSystemResource({
+    // build payload only with defined numeric values
+    const payload: {
+      requests: number;
+      cpu?: number;
+      memory?: number;
+      diskUsage?: number;
+      network?: number;
+    } = {
       requests:
         typeof eventStats["requestPerSecond"] === "number"
-          ? eventStats["requestPerSecond"]
+          ? (eventStats["requestPerSecond"] as number)
           : 0,
-    });
-
-    const lastVm = store.vms[store.vms.length - 1];
-
-    if (lastVm) {
-      const currentInstance = lastVm.instanceName;
-
-      if (shouldScaleUp()) {
-        const next = getNextInstance(currentInstance);
-        if (next) store.vms.push(next);
-      } else if (shouldScaleDown()) {
-        const prev = getPreviousInstance(currentInstance);
-        if (prev && store.vms.length > 1) store.vms.pop();
-      }
-    }
+    };
+    if (typeof eventStats["cpu"] === "number")
+      payload.cpu = eventStats["cpu"] as number;
+    if (typeof eventStats["memory"] === "number")
+      payload.memory = eventStats["memory"] as number;
+    if (typeof eventStats["diskUsage"] === "number")
+      payload.diskUsage = eventStats["diskUsage"] as number;
+    if (typeof eventStats["network"] === "number")
+      payload.network = eventStats["network"] as number;
+    updateSystemResource(payload);
   } catch (error) {
     throw error;
   }

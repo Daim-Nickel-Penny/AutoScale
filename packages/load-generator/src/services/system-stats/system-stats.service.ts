@@ -1,7 +1,6 @@
-import type { SystemStats } from "../../types/system-stats.js";
 import { store } from "../../utils/store.js";
 
-export const SystemStatsService = (): SystemStats => {
+export const SystemStatsService = () => {
   try {
     return store.systemStats;
   } catch (error) {

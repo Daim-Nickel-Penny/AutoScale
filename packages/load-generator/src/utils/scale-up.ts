@@ -1,4 +1,6 @@
 import { store } from "./store.js";
+// static VM tier definitions
+import vmsList from "../data/vms.js";
 
 const THRESHOLD = 0.9;
 
@@ -13,11 +15,9 @@ export function shouldScaleUp() {
 }
 
 export function getNextInstance(currentName: string) {
-  const vms = store.vms;
-
-  const idx = vms.findIndex((vm) => vm.instanceName === currentName);
-
-  if (idx < 0 || idx === vms.length - 1) return vms[idx] || null;
-
-  return vms[idx + 1];
+  const allTiers = vmsList;
+  const idx = allTiers.findIndex((vm) => vm.instanceName === currentName);
+  // if not found or at highest tier, cannot scale up
+  if (idx < 0 || idx === allTiers.length - 1) return null;
+  return allTiers[idx + 1];
 }
