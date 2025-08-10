@@ -1,0 +1,38 @@
+{
+  "vms": [
+    {
+      "instanceName": "string",
+      "cpu": "number",
+      "memory": "number",
+      "disk": "number",
+      "network": "number"
+    }
+  ],
+  "systemStats": {
+    "cpu": "number",
+    "processes": "number",
+    "maxProcesses": "number",
+    "threads": "number",
+    "maxThreads": "number",
+    "memory": "number",
+    "maxMemory": "number",
+    "diskUsage": "number",
+    "maxDiskUsage": "number",
+    "network": "number",
+    "networkSpeed": "number"
+  },
+  "currentMetrics": {
+    "requestPerSecond": "number",
+    "errorRate": "number",
+    "latency": "number"
+  },
+  "scalingActions": [
+    {
+      "instanceName": "string",
+      "cpu": "number",
+      "memory": "number",
+      "disk": "number",
+      "network": "number"
+    }
+  ]
+}

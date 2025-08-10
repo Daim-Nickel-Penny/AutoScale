@@ -1,0 +1,75 @@
+import type { Scale } from "types/scale";
+
+const vms: Scale[] = [
+  {
+    instanceName: "nano-1",
+    cpu: 5,
+    memory: 10,
+    disk: 10,
+    network: 5,
+  },
+  {
+    instanceName: "nano-2",
+    cpu: 6,
+    memory: 12,
+    disk: 11,
+    network: 6,
+  },
+  {
+    instanceName: "micro-1",
+    cpu: 10,
+    memory: 20,
+    disk: 15,
+    network: 8,
+  },
+  {
+    instanceName: "micro-2",
+    cpu: 12,
+    memory: 22,
+    disk: 16,
+    network: 9,
+  },
+  {
+    instanceName: "small-1",
+    cpu: 20,
+    memory: 40,
+    disk: 30,
+    network: 15,
+  },
+  {
+    instanceName: "small-2",
+    cpu: 22,
+    memory: 42,
+    disk: 32,
+    network: 16,
+  },
+  {
+    instanceName: "medium-1",
+    cpu: 40,
+    memory: 60,
+    disk: 50,
+    network: 25,
+  },
+  {
+    instanceName: "medium-2",
+    cpu: 42,
+    memory: 62,
+    disk: 52,
+    network: 26,
+  },
+  {
+    instanceName: "large-1",
+    cpu: 60,
+    memory: 80,
+    disk: 70,
+    network: 35,
+  },
+  {
+    instanceName: "large-2",
+    cpu: 62,
+    memory: 82,
+    disk: 72,
+    network: 36,
+  },
+];
+export default vms;

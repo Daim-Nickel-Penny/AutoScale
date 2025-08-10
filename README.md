@@ -12,11 +12,11 @@ This project simulates an event-driven autoscaler using **Apache Kafka** as the 
 
 - **Load Generator service**:
   - Produces synthetic load events (requests per second, CPU%, memory%) to a Kafka topic.
-- **Autoscaler service**:
+- **Hypervisor service**:
   - Consumes these events.
   - Applies configurable scaling rules.
   - Determines whether to scale the number of simulated worker instances up or down.
-- **Scaling actions**:
+- **Scaling actions are inside load generator**:
   - All actions are logged.
   - Optionally persisted to a database for review.
 
