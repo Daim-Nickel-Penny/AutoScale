@@ -1,8 +1,7 @@
 {
-  "name": "load-generator",
+  "name": "types",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,13 +9,7 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
-    "@types/node": "^24.2.1",
-    "typescript": "^5.9.2"
-  },
   "dependencies": {
-    "fastify": "^5.4.0",
-    "kafkajs": "^2.2.4",
-    "types": "file:../types"
+    "zod": "^4.0.17"
   }
 }
