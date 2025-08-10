@@ -1,6 +1,6 @@
 ## AutoScale: Kafka Autoscaling Demo
 
-<video src="./demo.mp4" controls width="600"></video>
+<img src="./demo.gif" controls width="600"></video>
 
 Above is the app in action showing the current load and scaling behavior.
 
