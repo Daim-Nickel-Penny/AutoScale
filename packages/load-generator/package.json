@@ -18,6 +18,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "@fastify/cors": "^11.1.0",
     "fastify": "^5.4.0",
     "kafkajs": "^2.2.4",
     "zod": "^4.0.17"

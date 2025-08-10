@@ -1,10 +1,12 @@
 import Fastify from "fastify";
+import cors from "@fastify/cors";
 import { loadEventRoute } from "./routes/load-event.route.js";
 import { currentMetricsRoute } from "./routes/current-metrics.route.js";
 import { scaleRoute } from "./routes/scale.route.js";
 import { systemStatsRoute } from "./routes/system-stats.route.js";
 
 const fastify = Fastify({ logger: true });
+await fastify.register(cors, { origin: true });
 
 fastify.get("/", async function handler(request, reply) {
   return { hello: "world" };

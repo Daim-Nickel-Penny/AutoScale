@@ -31,7 +31,7 @@ async function startProducer() {
     } catch (err) {
       console.error("Producer error:", err);
     }
-  }, 1000);
+  }, 30000);
 }
 
 startProducer().catch(console.error);
