@@ -1,0 +1,12 @@
+{
+  "name": "auto-scale",
+  "version": "1.0.0",
+  "description": "Modern distributed systems must dynamically adjust computing capacity based on fluctuating workloads and\r resource utilization to maintain performance while minimizing cost.\r In cloud platforms, this is achieved through **event-driven autoscaling**, where scaling decisions are triggered by real-time metrics such as:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
