@@ -1,8 +1,19 @@
-# Ignore node_modules to avoid copying dependencies
-node_modules
 
 # Ignore logs
 *.log
+
+# Ignore node_modules directories and everything within
+node_modules
+**/node_modules
+**/node_modules/**
+# Explicitly ignore types symlink in load-generator
+packages/load-generator/node_modules/types
+packages/load-generator/node_modules/types/**
+# Explicitly ignore monorepo node_modules symlinks
+packages/load-generator/node_modules
+packages/load-generator/node_modules/**
+packages/hypervisor/node_modules
+packages/hypervisor/node_modules/**
 
 # Ignore environment files
 .env
@@ -12,8 +23,6 @@ node_modules
 Dockerfile
 docker-compose.yml
 
-# Ignore build output
-dist
 build
 
 # Ignore OS-specific files
@@ -30,4 +39,10 @@ coverage
 # Ignore npm debug files
 npm-debug.log*
 yarn-debug.log*
+  
+# Ignore monorepo workspace node_modules symlinks to prevent invalid file requests
+packages/load-generator/node_modules
+packages/load-generator/node_modules/**
+packages/hypervisor/node_modules
+packages/hypervisor/node_modules/**
 yarn-error.log*

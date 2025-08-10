@@ -17,8 +17,45 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
     depends_on:
       - zookeeper
+
+  types:
+    build: ./packages/types
+    container_name: types
+    command: npm run build
+
+  load-generator:
+    build:
+      context: .
+      dockerfile: packages/load-generator/Dockerfile
+    container_name: load-generator
+    ports:
+      - "3001:3001"
+    depends_on:
+      - kafka
+      - types
+    command: npm run dev
+
+  hypervisor-consumer:
+    build:
+      context: .
+      dockerfile: packages/hypervisor/Dockerfile
+    container_name: hypervisor-consumer
+    depends_on:
+      - kafka
+      - types
+    command: npm run dev:consumer
+
+  hypervisor-producer:
+    build:
+      context: .
+      dockerfile: packages/hypervisor/Dockerfile
+    container_name: hypervisor-producer
+    depends_on:
+      - kafka
+      - types
+    command: npm run dev:producer

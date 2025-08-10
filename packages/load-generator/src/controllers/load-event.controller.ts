@@ -7,6 +7,8 @@ export const loadEventController = async (
   reply: FastifyReply
 ) => {
   try {
+    console.log("Received load event:", request.body);
+
     const result = LoadEventSchema.safeParse(request.body);
 
     if (!result.success) {

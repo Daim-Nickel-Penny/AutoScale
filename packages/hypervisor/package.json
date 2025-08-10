@@ -2,7 +2,12 @@
   "name": "hypervisor",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start:consumer": "node src/consumer/load-consumer.js",
+    "start:producer": "node src/__mock__/send-load-event.js",
+    "dev:consumer": "node --loader ts-node/esm src/consumer/load-consumer.ts",
+    "dev:producer": "node --loader ts-node/esm src/__mock__/send-load-event.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,6 +18,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "kafkajs": "^2.2.4"
+    "kafkajs": "^2.2.4",
+    "ts-node": "^10.9.2"
   }
 }
