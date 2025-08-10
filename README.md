@@ -1,24 +1,60 @@
-## Problem Statement
+## AutoScale: Kafka Autoscaling Demo
 
-Modern distributed systems must dynamically adjust computing capacity based on fluctuating workloads and
-resource utilization to maintain performance while minimizing cost.
-In cloud platforms, this is achieved through **event-driven autoscaling**, where scaling decisions are triggered by real-time metrics such as:
+<video src="./demo.mp4" controls width="600"></video>
 
-- CPU load
-- Memory consumption
-- Request throughput
+### Tech Stack
 
-This project simulates an event-driven autoscaler using **Apache Kafka** as the messaging backbone:
+- KafkaJS
+- Fastify
+- Next.js
+- TypeScript
+- Docker
+- Zod
 
-- **Load Generator service**:
-  - Produces synthetic load events (requests per second, CPU%, memory%) to a Kafka topic.
-- **Hypervisor service**:
-  - Consumes these events.
-  - Applies configurable scaling rules.
-  - Determines whether to scale the number of simulated worker instances up or down.
-- **Scaling actions are inside load generator**:
-  - All actions are logged.
-  - Optionally persisted to a database for review.
+Wanted to learn Kafka and autoscaling. Built this to see how scaling works with real events.
 
-**Goal:**  
-Demonstrate how Kafka can be used to build a responsive control loop for infrastructure management, processing continuous metric streams and triggering scaling actions in near real-time.
+### What It Does
+
+- Generates load events and sends to Kafka
+- Hypervisor consumes events and decides scaling
+- Logs scaling actions
+- Runs in Docker
+
+### Why
+
+- Test autoscaling logic
+- See Kafka in action
+- Mock environment
+
+### How to Run
+
+1. If you've run it before, do:
+
+```bash
+docker compose down
+```
+
+2. Start everything:
+
+```bash
+docker-compose up --build
+```
+
+3. In a new terminal, start the frontend:
+
+```bash
+cd packages/frontend
+npm run dev
+```
+
+Frontend runs outside Docker for hot reload. Backend services run in Docker.
+
+### Notes
+
+- This is a mock environment no real cloud infra.
+- Scaling logic is custom, just to see how it works.
+- All actions are logged, can be reviewed.
+
+---
+
+This project is just me experimenting with autoscaling and Kafka. If you want to see how event-driven scaling works, clone and run it.
