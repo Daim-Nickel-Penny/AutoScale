@@ -2,6 +2,8 @@
 
 <video src="./demo.mp4" controls width="600"></video>
 
+Above is the app in action showing the current load and scaling behavior.
+
 ### Tech Stack
 
 - KafkaJS
