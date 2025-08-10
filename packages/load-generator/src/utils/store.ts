@@ -1,6 +1,6 @@
-import type { Scale } from "types/scale";
-import type { SystemStats } from "types/system-stats";
-import type { CurrentMetrics } from "types/current-metrics";
+import type { Scale } from "../types/scale.ts";
+import type { SystemStats } from "../types/system-stats.ts";
+import type { CurrentMetrics } from "../types/current-metrics.ts";
 
 interface DataStore {
   vms: Scale[];

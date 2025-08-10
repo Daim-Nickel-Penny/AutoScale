@@ -1,5 +1,6 @@
 import { Kafka } from "kafkajs";
 import { GROUP_IDS } from "../constants/group-ids.js";
+import { fetch } from "undici";
 
 const kafka = new Kafka({
   brokers: ["kafka:9092"],

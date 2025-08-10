@@ -1,13 +1,15 @@
 FROM node:20
+# Set working directory
 WORKDIR /app
 
-# Install dependencies
+# Copy package metadata and install dependencies
 COPY packages/load-generator/package*.json ./
-# Copy built types
-COPY packages/types/dist/ ./types/
 RUN npm install
 
-# Copy application source
-COPY packages/load-generator/. ./
+COPY packages/load-generator/ ./
 
+# Expose service port
+EXPOSE 3001
+
+# Run in development mode
 CMD ["npm", "run", "dev"]

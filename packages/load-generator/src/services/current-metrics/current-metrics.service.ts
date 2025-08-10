@@ -1,4 +1,4 @@
-import { type CurrentMetrics } from "types/current-metrics";
+import type { CurrentMetrics } from "../../types/current-metrics.js";
 import { store } from "../../utils/store.js";
 
 export const CurrentMetricsService = (): CurrentMetrics => {

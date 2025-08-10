@@ -1,7 +1,10 @@
-import { type LoadEvent } from "types/load-event";
-import { store } from "../utils/store.js";
-import { shouldScaleUp, getNextInstance } from "../utils/scale-up.js";
-import { shouldScaleDown, getPreviousInstance } from "../utils/scale-down.js";
+import { store } from "../../utils/store.js";
+import { shouldScaleUp, getNextInstance } from "../../utils/scale-up.js";
+import {
+  shouldScaleDown,
+  getPreviousInstance,
+} from "../../utils/scale-down.js";
+import type { LoadEvent } from "../../types/load-event.js";
 
 export const LoadEventService = (loadEvent: LoadEvent) => {
   try {

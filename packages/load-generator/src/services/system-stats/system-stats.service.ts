@@ -1,4 +1,4 @@
-import { type SystemStats } from "types/system-stats";
+import type { SystemStats } from "../../types/system-stats.js";
 import { store } from "../../utils/store.js";
 
 export const SystemStatsService = (): SystemStats => {

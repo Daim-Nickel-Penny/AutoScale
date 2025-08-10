@@ -1,6 +1,6 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
-import { LoadEventSchema, type LoadEvent } from "types/load-event";
-import { LoadEventService } from "../services/load-event.service.js";
+import { LoadEventService } from "../../services/load-event/load-event.service.js";
+import { LoadEventSchema, type LoadEvent } from "../../types/load-event.js";
 
 export const loadEventController = async (
   request: FastifyRequest,

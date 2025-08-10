@@ -1,4 +1,4 @@
-import type { Scale } from "types/scale";
+import type { Scale } from "../types/scale.ts";
 
 const vms: Scale[] = [
   {

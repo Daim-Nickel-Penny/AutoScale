@@ -1,6 +1,6 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
-import { ScaleSchema, type Scale } from "types/scale";
 import { ScaleService } from "../../services/scale/scale.service.js";
+import { ScaleSchema, type Scale } from "../../types/scale.js";
 
 export const scaleController = async (
   request: FastifyRequest,
